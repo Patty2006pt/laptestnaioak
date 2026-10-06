@@ -133,3 +133,42 @@ function showNutrition(name, calories, protein, carbs, fat) {
     const modal = new bootstrap.Modal(document.getElementById('nutritionModal'));
     modal.show();
 }
+
+// ===== ค้นหาเมนูอาหาร =====
+function searchMenu() {
+    const input = document.getElementById('menuSearchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const resultText = document.getElementById('searchResultText');
+    const keyword = input.value.trim().toLowerCase();
+
+    // แสดง/ซ่อนปุ่มกากบาท
+    clearBtn.style.display = keyword ? 'block' : 'none';
+
+    const items = document.querySelectorAll('.menu-item-box');
+    let matchCount = 0;
+
+    items.forEach(item => {
+        const title = item.querySelector('.card-title').innerText.toLowerCase();
+        if (keyword === '' || title.includes(keyword)) {
+            item.classList.remove('is-hidden');
+            matchCount++;
+        } else {
+            item.classList.add('is-hidden');
+        }
+    });
+
+    // แสดงจำนวนผลลัพธ์
+    if (keyword) {
+        resultText.classList.remove('d-none');
+        resultText.innerText = `พบ ${matchCount} เมนูที่ตรงกับ "${input.value.trim()}"`;
+    } else {
+        resultText.classList.add('d-none');
+    }
+}
+
+function clearSearch() {
+    const input = document.getElementById('menuSearchInput');
+    input.value = '';
+    searchMenu();
+    input.focus();
+}
