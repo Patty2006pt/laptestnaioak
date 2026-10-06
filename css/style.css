@@ -1,0 +1,182 @@
+
+:root {
+    --bg-primary: #FFFDF9;
+    --bg-navbar: #FFFDF9;
+    --text-primary: #2C221E;
+    --text-muted: #777777;
+    --accent-main: #C82323;   
+    --accent-sub: #E65100;    
+    --border-color: #F5A623;  
+    --card-bg: #FFFFFF;
+    --btn-text: #FFFFFF;
+}
+
+
+
+[data-theme="pandan"] {
+    --bg-primary: #F4F7F4;
+    --bg-navbar: #FFFFFF;
+    --text-primary: #1C3322;
+    --text-muted: #627D69;
+    --accent-main: #2E6F40;   
+    --accent-sub: #E07A5F;    
+    --border-color: #81B29A;
+    --card-bg: #FFFFFF;
+    --btn-text: #FFFFFF;
+}
+
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Kanit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.custom-navbar {
+    background-color: var(--bg-navbar);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    border-bottom: 2px solid var(--border-color);
+    padding: 0.5rem 0;
+    width: 100%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+
+.brand-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.brand-info {
+    line-height: 1.2;
+}
+
+.brand-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-main);
+}
+
+.brand-subtitle {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Nav Links */
+.custom-navbar .nav-link {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 0.5rem 0.8rem !important;
+    transition: color 0.2s ease;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    color: var(--accent-main);
+}
+
+/* Theme Dropdown Button */
+.btn-theme-select {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    transition: all 0.2s ease;
+}
+
+.btn-theme-select:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--accent-main);
+}
+
+.theme-dropdown-menu {
+    background-color: var(--bg-navbar);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-dropdown-menu .dropdown-item {
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+
+.theme-dropdown-menu .dropdown-item:hover,
+.theme-dropdown-menu .dropdown-item.active {
+    background-color: var(--accent-main);
+    color: var(--btn-text);
+}
+
+/* Order Button */
+.btn-order-thai {
+    background-color: var(--accent-main);
+    color: var(--btn-text) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 6px 16px;
+    border: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn-order-thai:hover {
+    background-color: var(--accent-sub);
+    opacity: 0.9;
+}
+
+/* Custom Hamburger Toggler Style */
+.custom-toggler {
+    border-color: var(--border-color);
+    padding: 4px 8px;
+}
+
+.custom-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(200, 35, 35, 0.25);
+}
+
+
+
+/* การ์ดหมวดหมู่ */
+.category-card {
+    background-color: var(--card-bg);
+    border: 2px solid transparent !important;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+}
+
+.category-card.active {
+    border-color: var(--accent-main) !important;
+    background-color: rgba(200, 35, 35, 0.05);
+}
+
+.cat-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* คลาสสำหรับซ่อนรายการอาหาร */
+.menu-item-box {
+    transition: all 0.3s ease;
+}
+
+.menu-item-box.is-hidden {
+    display: none !important;
+}
