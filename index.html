@@ -44,13 +44,17 @@
                             </span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end theme-dropdown-menu" aria-labelledby="themeDropdown">
-                            <li><button class="dropdown-item active" type="button" onclick="setTheme('light')">🌶️ Thai Classic (แดง)</button></li>
-                            <li><button class="dropdown-item" type="button" onclick="setTheme('pandan')">🍵 Pandan & Tea (มินิมอล)</button></li>
+                            <li><button class="dropdown-item active" type="button" data-theme-option="light" onclick="setTheme('light', this)">🌶️ Thai Classic (แดง)</button></li>
+                            <li><button class="dropdown-item" type="button" data-theme-option="pandan" onclick="setTheme('pandan', this)">🍵 Pandan & Tea (มินิมอล)</button></li>
                         </ul>
                     </li>
 
-                    <li class="nav-item ms-lg-2">
-                        <a class="btn btn-order-thai w-100 mt-2 mt-lg-0" href="#">สั่งอาหาร</a>
+                    <li class="nav-item" id="authNavItem">
+                        <a class="btn btn-auth-nav w-100 mt-2 mt-lg-0" href="./login.html">เข้าสู่ระบบ / สมัครสมาชิก</a>
+                    </li>
+
+                    <li class="nav-item ms-lg-1">
+                        <a class="btn btn-order-thai w-100 mt-2 mt-lg-0" href="#menu">สั่งอาหาร</a>
                     </li>
                 </ul>
             </div>
@@ -137,6 +141,18 @@
 <section id="menu" class="py-5">
     <div class="container">
         <h2 class="fw-bold mb-4" id="menuTitle">เมนูยอดฮิตประจำสัปดาห์</h2>
+
+        <!-- Login Required Notice (hidden when logged in) -->
+        <div id="menuAuthNotice" class="auth-notice-banner d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 shadow-sm">
+            <div>
+                <div class="fw-bold">🔒 กรุณาเข้าสู่ระบบก่อนเลือกสั่งอาหาร</div>
+                <div class="text-muted small">เข้าสู่ระบบหรือสมัครสมาชิกใหม่เพื่อเพิ่มเมนูอาหารลงตะกร้าและทำการสั่งซื้อ</div>
+            </div>
+            <div class="d-flex gap-2 flex-shrink-0">
+                <a href="./login.html" class="btn btn-order-thai btn-sm px-3">เข้าสู่ระบบ</a>
+                <a href="./login.html?mode=register" class="btn btn-auth-nav btn-sm px-3">สมัครสมาชิกใหม่</a>
+            </div>
+        </div>
 
         <!-- Search Bar -->
         <div class="mb-4">
@@ -433,7 +449,29 @@
     </div>
 </div>
 
+<!-- Login Required Modal -->
+<div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4 border-0 shadow">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="modal-title fw-bold" id="loginRequiredModalLabel">🔒 กรุณาเข้าสู่ระบบก่อนเลือกอาหาร</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="fs-1 mb-2">🍽️</div>
+                <p class="mb-1 fw-medium" id="loginRequiredMessage">คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเลือกอาหารลงตะกร้าได้</p>
+                <p class="text-muted small mb-4">หากยังไม่มีบัญชี สามารถสมัครสมาชิกใหม่ได้ทันที</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="./login.html" class="btn btn-order-thai px-4 py-2">เข้าสู่ระบบ</a>
+                    <a href="./login.html?mode=register" class="btn btn-auth-nav px-4 py-2">สมัครสมาชิกใหม่</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="./bootstrap/bootstrap.bundle.min.js"></script>
     <script src="./js/main.js"></script>
+    <script src="./js/auth.js"></script>
 </body>
 </html>

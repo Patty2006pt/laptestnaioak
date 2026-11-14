@@ -1,5 +1,5 @@
 
-function setTheme(themeName) {
+function setTheme(themeName, clickedEl) {
     
     document.documentElement.setAttribute('data-theme', themeName);
     localStorage.setItem('foodhub_theme', themeName);
@@ -18,10 +18,13 @@ function setTheme(themeName) {
 
     document.querySelectorAll('.theme-dropdown-menu .dropdown-item').forEach(item => {
         item.classList.remove('active');
+        if (item.dataset.themeOption === themeName) {
+            item.classList.add('active');
+        }
     });
 
-    if (event && event.target) {
-        event.target.classList.add('active');
+    if (clickedEl) {
+        clickedEl.classList.add('active');
     }
 }
 
@@ -51,8 +54,34 @@ function filterMenu(category, clickedCard) {
 
 let cart = [];
 
+function requireAuthForFood(foodName) {
+    const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    if (user) {
+        return true;
+    }
+
+    const msgEl = document.getElementById('loginRequiredMessage');
+    if (msgEl) {
+        msgEl.textContent = foodName
+            ? `กรุณาเข้าสู่ระบบก่อนเลือก "${foodName}" ลงตะกร้า`
+            : 'คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเลือกอาหารลงตะกร้าได้';
+    }
+
+    const modalEl = document.getElementById('loginRequiredModal');
+    if (modalEl && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+    } else {
+        window.location.href = './login.html';
+    }
+    return false;
+}
+
 function addToCart(name, price) {
-    
+    if (!requireAuthForFood(name)) {
+        return;
+    }
+
     const existingItem = cart.find(item => item.name === name);
     if (existingItem) {
         existingItem.quantity += 1;
@@ -115,7 +144,17 @@ function removeItem(index) {
     updateCartUI();
 }
 
+function resetCart() {
+    cart = [];
+    if (document.getElementById('cartItemsContainer')) {
+        updateCartUI();
+    }
+}
+
 function checkout() {
+    if (!requireAuthForFood()) {
+        return;
+    }
     if (cart.length === 0) {
         alert('กรุณาเลือกอาหารก่อนทำการสั่งซื้อครับ');
         return;
