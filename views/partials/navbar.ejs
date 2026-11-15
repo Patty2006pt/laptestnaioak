@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg" alt="Food Hub Logo" class="brand-logo me-2">
+            <div class="brand-info d-flex flex-column">
+                <span class="brand-title">Food Hub</span>
+                <span class="brand-subtitle">Taste · Craft · Thai</span>
+            </div>
+        </a>
+
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-2 py-2 py-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link <%= activePage === 'home' ? 'active' : '' %>" <%= activePage === 'home' ? 'aria-current="page"' : '' %> href="/">หน้าแรก</a>
+                </li>
+
+                <!-- Dropdown เลือกธีม -->
+                <li class="nav-item dropdown my-1 my-lg-0">
+                    <button class="btn btn-theme-select dropdown-toggle w-100 d-flex align-items-center justify-content-between justify-content-lg-start gap-1" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span>
+                            <span id="themeIcon">🌶️</span>
+                            <span id="themeLabel">แดง</span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end theme-dropdown-menu" aria-labelledby="themeDropdown">
+                        <li><button class="dropdown-item active" type="button" data-theme-option="light" onclick="setTheme('light', this)">🌶️ Thai Classic (แดง)</button></li>
+                        <li><button class="dropdown-item" type="button" data-theme-option="pandan" onclick="setTheme('pandan', this)">🍵 Pandan &amp; Tea (มินิมอล)</button></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" id="authNavItem">
+                    <% if (currentUser) { %>
+                        <div class="dropdown w-100">
+                            <button type="button" class="btn btn-auth-nav dropdown-toggle w-100 d-flex align-items-center justify-content-between justify-content-lg-center gap-1 mt-2 mt-lg-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span>👤 <%= currentUser.name %></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end theme-dropdown-menu">
+                                <li><span class="dropdown-item-text text-muted small"><%= currentUser.email %></span></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><button type="button" class="dropdown-item text-danger" onclick="logoutUser()">ออกจากระบบ</button></li>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <a class="btn btn-auth-nav <%= activePage === 'login' ? 'active' : '' %> w-100 mt-2 mt-lg-0" href="/login">เข้าสู่ระบบ / สมัครสมาชิก</a>
+                    <% } %>
+                </li>
+
+                <li class="nav-item ms-lg-1">
+                    <a class="btn btn-order-thai w-100 mt-2 mt-lg-0" href="/#menu">สั่งอาหาร</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

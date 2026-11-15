@@ -1,0 +1,29 @@
+{
+  "name": "laptestnaioak",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Patty2006pt/laptestnaioak.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Patty2006pt/laptestnaioak/issues"
+  },
+  "homepage": "https://github.com/Patty2006pt/laptestnaioak#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-session": "^1.19.0",
+    "sqlite3": "^6.0.1"
+  }
+}

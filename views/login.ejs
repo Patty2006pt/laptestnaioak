@@ -4,58 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Hub | เข้าสู่ระบบ &amp; สมัครสมาชิก</title>
-    <link rel="icon" href="./assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg">
-    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="/assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg">
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-    <!-- Navbar Responsive -->
-    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="./index.html">
-                <img src="./assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg" alt="Food Hub Logo" class="brand-logo me-2">
-                <div class="brand-info d-flex flex-column">
-                    <span class="brand-title">Food Hub</span>
-                    <span class="brand-subtitle">Taste · Craft · Thai</span>
-                </div>
-            </a>
-
-            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-2 py-2 py-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.html">หน้าแรก</a>
-                    </li>
-
-                    <!-- Dropdown เลือกธีม -->
-                    <li class="nav-item dropdown my-1 my-lg-0">
-                        <button class="btn btn-theme-select dropdown-toggle w-100 d-flex align-items-center justify-content-between justify-content-lg-start gap-1" type="button" id="themeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span>
-                                <span id="themeIcon">🌶️</span>
-                                <span id="themeLabel">สว่าง</span>
-                            </span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end theme-dropdown-menu" aria-labelledby="themeDropdown">
-                            <li><button class="dropdown-item active" type="button" data-theme-option="light" onclick="setTheme('light', this)">🌶️ Thai Classic (แดง)</button></li>
-                            <li><button class="dropdown-item" type="button" data-theme-option="pandan" onclick="setTheme('pandan', this)">🍵 Pandan &amp; Tea (มินิมอล)</button></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item" id="authNavItem">
-                        <a class="btn btn-auth-nav active w-100 mt-2 mt-lg-0" href="./login.html">เข้าสู่ระบบ / สมัครสมาชิก</a>
-                    </li>
-
-                    <li class="nav-item ms-lg-1">
-                        <a class="btn btn-order-thai w-100 mt-2 mt-lg-0" href="./index.html#menu">สั่งอาหาร</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <%- include('partials/navbar', { activePage: 'login', currentUser }) %>
 
     <!-- Main Auth Section -->
     <main class="auth-section">
@@ -71,7 +26,7 @@
                                     <span class="badge bg-light text-dark rounded-pill px-3 py-2 mb-3 fw-normal">🍲 Food Hub Member</span>
                                     <h2 class="fw-bold mb-2">รสชาติไทยแท้<br>พร้อมเสิร์ฟถึงบ้าน</h2>
                                     <p class="small opacity-75 mb-4">สมัครสมาชิกฟรี เพื่อสั่งอาหารได้รวดเร็วยิ่งขึ้นและรับสิทธิพิเศษสำหรับสมาชิก</p>
-                                    <img src="./assets/tomyum.jpg" alt="ต้มยำกุ้ง Food Hub" class="auth-showcase-img mb-4 shadow-sm">
+                                    <img src="/assets/tomyum.jpg" alt="ต้มยำกุ้ง Food Hub" class="auth-showcase-img mb-4 shadow-sm">
                                 </div>
 
                                 <ul class="auth-feature-list">
@@ -85,46 +40,49 @@
                             <div class="col-md-7 auth-form-panel">
 
                                 <!-- Already Logged In View -->
-                                <div id="loggedInCard" class="text-center py-4 d-none">
+                                <div id="loggedInCard" class="text-center py-4 <%= currentUser ? '' : 'd-none' %>">
                                     <div class="fs-1 mb-2">👋</div>
                                     <h3 class="fw-bold mb-1">เข้าสู่ระบบอยู่แล้ว</h3>
-                                    <p class="text-muted mb-3">สวัสดีคุณ <strong id="loggedInUserName"></strong> (<span id="loggedInUserEmail"></span>)</p>
+                                    <p class="text-muted mb-3">
+                                        สวัสดีคุณ <strong id="loggedInUserName"><%= currentUser ? currentUser.name : '' %></strong>
+                                        (<span id="loggedInUserEmail"><%= currentUser ? currentUser.email : '' %></span>)
+                                    </p>
                                     <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-4">
-                                        <a href="./index.html#menu" class="btn btn-order-thai px-4 py-2">ไปหน้าสั่งอาหาร</a>
+                                        <a href="/#menu" class="btn btn-order-thai px-4 py-2">ไปหน้าสั่งอาหาร</a>
                                         <button type="button" class="btn btn-outline-danger px-4 py-2 rounded-3" onclick="logoutUser()">ออกจากระบบ</button>
                                     </div>
                                 </div>
 
                                 <!-- Login / Register Wrapper -->
-                                <div id="authFormsWrapper">
+                                <div id="authFormsWrapper" class="<%= currentUser ? 'd-none' : '' %>">
                                     <div class="auth-tabs mb-4" role="tablist">
-                                        <button type="button" class="auth-tab-btn active" id="loginTabBtn" onclick="switchAuthMode('login')">
+                                        <button type="button" class="auth-tab-btn <%= mode !== 'register' ? 'active' : '' %>" id="loginTabBtn" onclick="switchAuthMode('login')">
                                             เข้าสู่ระบบ
                                         </button>
-                                        <button type="button" class="auth-tab-btn" id="registerTabBtn" onclick="switchAuthMode('register')">
+                                        <button type="button" class="auth-tab-btn <%= mode === 'register' ? 'active' : '' %>" id="registerTabBtn" onclick="switchAuthMode('register')">
                                             สมัครสมาชิกใหม่
                                         </button>
                                     </div>
 
                                     <div class="mb-3">
-                                        <h3 class="fw-bold mb-1" id="authHeading">ยินดีต้อนรับกลับมา</h3>
-                                        <p class="text-muted small mb-0" id="authSubheading">เข้าสู่ระบบเพื่อสั่งอาหารจานโปรดของคุณ</p>
+                                        <h3 class="fw-bold mb-1" id="authHeading"><%= mode === 'register' ? 'สมัครสมาชิกใหม่' : 'ยินดีต้อนรับกลับมา' %></h3>
+                                        <p class="text-muted small mb-0" id="authSubheading"><%= mode === 'register' ? 'สร้างบัญชี Food Hub เพื่อสั่งอาหารและรับสิทธิพิเศษ' : 'เข้าสู่ระบบเพื่อสั่งอาหารจานโปรดของคุณ' %></p>
                                     </div>
 
                                     <!-- Alert Feedback -->
                                     <div id="authAlert" class="d-none" role="alert"></div>
 
                                     <!-- Login Form -->
-                                    <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
+                                    <form id="loginForm" class="<%= mode === 'register' ? 'd-none' : '' %>" onsubmit="handleLogin(event)" novalidate>
                                         <div class="mb-3">
                                             <label for="loginEmail" class="form-label fw-medium small">อีเมล</label>
-                                            <input type="email" class="form-control auth-input" id="loginEmail" placeholder="name@example.com" autocomplete="email" required>
+                                            <input type="email" class="form-control auth-input" id="loginEmail" name="email" placeholder="name@example.com" autocomplete="email" required>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="loginPassword" class="form-label fw-medium small">รหัสผ่าน</label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control auth-input" id="loginPassword" placeholder="กรอกรหัสผ่านของคุณ" autocomplete="current-password" required>
+                                                <input type="password" class="form-control auth-input" id="loginPassword" name="password" placeholder="กรอกรหัสผ่านของคุณ" autocomplete="current-password" required>
                                                 <button class="btn password-toggle-btn" type="button" aria-label="แสดงรหัสผ่าน" onclick="togglePasswordVisibility('loginPassword', this)">👁️</button>
                                             </div>
                                         </div>
@@ -149,27 +107,27 @@
                                     </form>
 
                                     <!-- Register Form -->
-                                    <form id="registerForm" class="d-none" onsubmit="handleRegister(event)" novalidate>
+                                    <form id="registerForm" class="<%= mode === 'register' ? '' : 'd-none' %>" onsubmit="handleRegister(event)" novalidate>
                                         <div class="mb-3">
                                             <label for="registerName" class="form-label fw-medium small">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control auth-input" id="registerName" placeholder="เช่น สมชาย ใจดี" autocomplete="name" required>
+                                            <input type="text" class="form-control auth-input" id="registerName" name="name" placeholder="เช่น สมชาย ใจดี" autocomplete="name" required>
                                         </div>
 
                                         <div class="row g-3 mb-3">
                                             <div class="col-sm-6">
                                                 <label for="registerEmail" class="form-label fw-medium small">อีเมล <span class="text-danger">*</span></label>
-                                                <input type="email" class="form-control auth-input" id="registerEmail" placeholder="name@example.com" autocomplete="email" required>
+                                                <input type="email" class="form-control auth-input" id="registerEmail" name="email" placeholder="name@example.com" autocomplete="email" required>
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="registerPhone" class="form-label fw-medium small">เบอร์โทรศัพท์</label>
-                                                <input type="tel" class="form-control auth-input" id="registerPhone" placeholder="0812345678" autocomplete="tel">
+                                                <input type="tel" class="form-control auth-input" id="registerPhone" name="phone" placeholder="0812345678" autocomplete="tel">
                                             </div>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="registerPassword" class="form-label fw-medium small">รหัสผ่าน <span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control auth-input" id="registerPassword" placeholder="อย่างน้อย 6 ตัวอักษร" autocomplete="new-password" minlength="6" required>
+                                                <input type="password" class="form-control auth-input" id="registerPassword" name="password" placeholder="อย่างน้อย 6 ตัวอักษร" autocomplete="new-password" minlength="6" required>
                                                 <button class="btn password-toggle-btn" type="button" aria-label="แสดงรหัสผ่าน" onclick="togglePasswordVisibility('registerPassword', this)">👁️</button>
                                             </div>
                                             <div class="password-strength-bar">
@@ -181,7 +139,7 @@
                                         <div class="mb-3">
                                             <label for="registerConfirmPassword" class="form-label fw-medium small">ยืนยันรหัสผ่าน <span class="text-danger">*</span></label>
                                             <div class="input-group">
-                                                <input type="password" class="form-control auth-input" id="registerConfirmPassword" placeholder="กรอกรหัสผ่านอีกครั้ง" autocomplete="new-password" minlength="6" required>
+                                                <input type="password" class="form-control auth-input" id="registerConfirmPassword" name="confirmPassword" placeholder="กรอกรหัสผ่านอีกครั้ง" autocomplete="new-password" minlength="6" required>
                                                 <button class="btn password-toggle-btn" type="button" aria-label="แสดงรหัสผ่าน" onclick="togglePasswordVisibility('registerConfirmPassword', this)">👁️</button>
                                             </div>
                                         </div>
@@ -212,8 +170,11 @@
         </div>
     </main>
 
-    <script src="./bootstrap/bootstrap.bundle.min.js"></script>
-    <script src="./js/main.js"></script>
-    <script src="./js/auth.js"></script>
+    <script>
+        window.__FOODHUB_USER__ = <%- JSON.stringify(currentUser || null).replace(/</g, '\\u003c') %>;
+    </script>
+    <script src="/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/auth.js"></script>
 </body>
 </html>

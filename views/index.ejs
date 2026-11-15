@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Hub | Home Page</title>
+    <link rel="icon" href="/assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg">
+    <link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <%- include('partials/navbar', { activePage: 'home', currentUser }) %>
+
+    <!-- Main Content Area -->
+    <main>
+
+        <section class="hero-section py-5">
+            <div class="container">
+                <div class="row align-items-center gy-4">
+
+                    <div class="col-lg-6">
+                        <span class="badge bg-warning text-dark mb-2 fw-normal px-3 py-2 rounded-pill">🔥 ร้านอาหารไทยยอดนิยม</span>
+                        <h1 class="display-4 fw-bold mb-3 hero-title">สัมผัสรสชาติไทยแท้ <br><span class="highlight-text">อร่อยสดใหม่ทุกจาน</span></h1>
+                        <p class="lead text-muted mb-4">คัดสรรวัตถุดิบชั้นดี ปรุงด้วยความใส่ใจจากเชฟมากประสบการณ์ พร้อมส่งตรงความอร่อยถึงบ้านคุณแล้ววันนี้</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#menu" class="btn btn-order-thai btn-lg px-4">ดูเมนูทั้งหมด</a>
+                            <a href="#about" class="btn btn-outline-secondary btn-lg px-4">รู้จักเราเพิ่มเติม</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="hero-image-container text-center">
+                            <img src="/assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg" alt="อาหารไทยแนะนำ" class="img-fluid rounded-4 shadow-lg hero-img">
+                            <div class="shadow-sm p-3 bg-body rounded-3 border d-inline-flex align-items-center gap-2 mt-4">
+                                <span class="fs-4">⭐️ 4.9</span>
+                                <div class="text-start">
+                                    <div class="fw-bold small">รีวิวจากลูกค้า</div>
+                                    <div class="text-muted text-xs">มากกว่า 1,000+ ออเดอร์</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- หมวดหมู่เมนูอร่อย -->
+        <section class="py-4 bg-light-custom">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">หมวดหมู่เมนูอร่อย</h2>
+                    <p class="text-muted">เลือกทานตามสไตล์ที่คุณชื่นชอบ</p>
+                </div>
+
+                <div class="row g-3 text-center">
+                    <div class="col-6 col-md-4 col-lg-2-4">
+                        <div class="card border-0 shadow-sm p-3 category-card <%= selectedCategory === 'all' ? 'active' : '' %>" onclick="filterMenu('all', this)">
+                            <img src="/assets/Gemini_Generated_Image_ydjf53ydjf53ydjf.jpeg" class="cat-icon mb-2 mx-auto" alt="ทั้งหมด">
+                            <h5 class="fw-bold fs-6 mb-0">ทั้งหมด</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2-4">
+                        <div class="card border-0 shadow-sm p-3 category-card <%= selectedCategory === 'soup' ? 'active' : '' %>" onclick="filterMenu('soup', this)">
+                            <img src="/assets/tomyum.jpg" class="cat-icon mb-2 mx-auto" alt="ต้ม &amp; แกงไทย">
+                            <h5 class="fw-bold fs-6 mb-0">ต้ม &amp; แกงไทย</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2-4">
+                        <div class="card border-0 shadow-sm p-3 category-card <%= selectedCategory === 'stir' ? 'active' : '' %>" onclick="filterMenu('stir', this)">
+                            <img src="/assets/padthai.jpeg" class="cat-icon mb-2 mx-auto" alt="ผัด &amp; ทอด">
+                            <h5 class="fw-bold fs-6 mb-0">ผัด &amp; ทอด</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2-4">
+                        <div class="card border-0 shadow-sm p-3 category-card <%= selectedCategory === 'spicy' ? 'active' : '' %>" onclick="filterMenu('spicy', this)">
+                            <img src="/assets/larbmu.jpg" class="cat-icon mb-2 mx-auto" alt="ยำ &amp; ส้มตำ">
+                            <h5 class="fw-bold fs-6 mb-0">ยำ &amp; ส้มตำ</h5>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2-4">
+                        <div class="card border-0 shadow-sm p-3 category-card <%= selectedCategory === 'dessert' ? 'active' : '' %>" onclick="filterMenu('dessert', this)">
+                            <img src="/assets/mangostickeyrice.jpg" class="cat-icon mb-2 mx-auto" alt="ของหวาน &amp; เครื่องดื่ม">
+                            <h5 class="fw-bold fs-6 mb-0">ของหวาน &amp; เครื่องดื่ม</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- รายการเมนูอาหารจาก SQLite Database -->
+        <section id="menu" class="py-5">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+                    <h2 class="fw-bold mb-0" id="menuTitle">เมนูยอดฮิตประจำสัปดาห์</h2>
+                    <button type="button" class="btn btn-auth-nav d-flex align-items-center gap-2" onclick="openCartSidebar()">
+                        <span>🛒 ตะกร้าของฉัน</span>
+                        <span class="badge bg-danger rounded-pill" id="menuCartCount"><%= cart.totalCount %></span>
+                    </button>
+                </div>
+
+                <% if (!currentUser) { %>
+                    <!-- Login Required Notice (hidden when logged in) -->
+                    <div id="menuAuthNotice" class="auth-notice-banner d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 shadow-sm">
+                        <div>
+                            <div class="fw-bold">🔒 กรุณาเข้าสู่ระบบก่อนเลือกสั่งอาหาร</div>
+                            <div class="text-muted small">เข้าสู่ระบบหรือสมัครสมาชิกใหม่เพื่อเพิ่มเมนูอาหารลงตะกร้าและทำการสั่งซื้อ</div>
+                        </div>
+                        <div class="d-flex gap-2 flex-shrink-0">
+                            <a href="/login" class="btn btn-order-thai btn-sm px-3">เข้าสู่ระบบ</a>
+                            <a href="/login?mode=register" class="btn btn-auth-nav btn-sm px-3">สมัครสมาชิกใหม่</a>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <div class="input-group input-group-lg shadow-sm rounded-pill overflow-hidden">
+                        <span class="input-group-text bg-white border-0 ps-3">🔍</span>
+                        <input type="text" id="menuSearchInput" class="form-control border-0" placeholder="ค้นหาเมนูอาหาร..." value="<%= searchQuery %>" oninput="searchMenu()">
+                        <button class="btn btn-outline-secondary border-0 pe-3" type="button" id="clearSearchBtn" onclick="clearSearch()" style="display:<%= searchQuery ? 'block' : 'none' %>;">✕</button>
+                    </div>
+                    <p class="text-muted small mt-2 ms-1 <%= searchQuery ? '' : 'd-none' %>" id="searchResultText"></p>
+                </div>
+
+                <div class="row g-4" id="menuContainer">
+                    <% if (products.length === 0) { %>
+                        <div class="col-12 text-center py-5 text-muted">
+                            <div class="fs-1 mb-2">🍽️</div>
+                            <p class="mb-0">ไม่พบรายการเมนูอาหารในขณะนี้</p>
+                        </div>
+                    <% } else { %>
+                        <% products.forEach((product) => { %>
+                            <div class="col-md-4 menu-item-box" data-category="<%= product.category %>" data-product-id="<%= product.id %>">
+                                <div class="card h-100 border-0 shadow-sm menu-card position-relative">
+                                    <span class="position-absolute top-0 end-0 m-2 badge bg-dark bg-opacity-75 rounded-pill px-2 py-1 fs-7">
+                                        🔥 <%= product.calories %> kcal
+                                    </span>
+                                    <img src="<%= product.image_url %>" alt="<%= product.name %>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span class="badge <%= product.badge_class %>"><%= product.badge_text %></span>
+                                            <span class="fw-bold highlight-text fs-5">฿<%= product.price %></span>
+                                        </div>
+                                        <h5 class="card-title fw-bold"><%= product.name %></h5>
+                                        <p class="card-text text-muted small"><%= product.description %></p>
+                                    </div>
+                                    <div class="card-footer bg-transparent border-0 pb-3 d-flex gap-2">
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-secondary btn-sm px-2"
+                                            data-name="<%= product.name %>"
+                                            data-calories="<%= product.calories %>"
+                                            data-protein="<%= product.protein %>"
+                                            data-carbs="<%= product.carbs %>"
+                                            data-fat="<%= product.fat %>"
+                                            onclick="showNutritionFromBtn(this)">
+                                            🥗 รายละเอียด
+                                        </button>
+                                        <button type="button" class="btn btn-order-thai btn-sm flex-grow-1" onclick="addToCart(<%= product.id %>, this)">
+                                            + เพิ่มลงตะกร้า
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Offcanvas Sidebar -->
+    <div class="offcanvas offcanvas-end custom-cart-sidebar" tabindex="-1" id="cartSidebar" aria-labelledby="cartSidebarLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title fw-bold d-flex align-items-center gap-2" id="cartSidebarLabel">
+                🛒 ตะกร้าของฉัน <span class="badge bg-danger rounded-pill fs-6" id="cartCountBadge"><%= cart.totalCount %></span>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <!-- รายการอาหารในตะกร้า -->
+        <div class="offcanvas-body" id="cartItemsContainer">
+            <% if (cart.items.length === 0) { %>
+                <div class="text-center text-muted py-5" id="emptyCartMsg">
+                    <div class="fs-1 mb-2">🧺</div>
+                    <p>ยังไม่มีรายการอาหารในตะกร้า</p>
+                </div>
+            <% } else { %>
+                <div class="d-flex flex-column gap-3">
+                    <% cart.items.forEach((item) => { %>
+                        <div class="d-flex align-items-center justify-content-between p-2 rounded border bg-body shadow-sm">
+                            <div>
+                                <h6 class="fw-bold mb-1"><%= item.name %></h6>
+                                <small class="text-muted">฿<%= item.price %> x <%= item.quantity %></small>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fw-bold text-danger">฿<%= item.price * item.quantity %></span>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeItem(<%= item.productId %>)">✕</button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+
+        <!-- ส่วนสรุปราคาและปุ่มชำระเงิน -->
+        <div class="offcanvas-footer border-top p-3 bg-light-custom">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-muted">ราคารวมทั้งหมด</span>
+                <span class="fs-4 fw-bold highlight-text" id="cartTotalPrice">฿<%= cart.totalPrice %></span>
+            </div>
+            <button type="button" class="btn btn-order-thai w-100 py-2 fs-6 fw-bold" onclick="checkout()">
+                ยืนยันการสั่งซื้อ &rarr;
+            </button>
+        </div>
+    </div>
+
+    <!-- Nutrition Detail Modal -->
+    <div class="modal fade" id="nutritionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalMenuName">รายละเอียดอาหาร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center py-3 bg-light-custom rounded-3 mb-3">
+                        <span class="text-muted small">พลังงานทั้งหมด</span>
+                        <h2 class="fw-bold highlight-text mb-0" id="modalCalories">0 kcal</h2>
+                    </div>
+
+                    <h6 class="fw-bold mb-3 fs-6">ข้อมูลโภชนาการ (โดยประมาณ)</h6>
+                    <div class="row g-2 text-center">
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3">
+                                <small class="text-muted d-block">โปรตีน</small>
+                                <strong id="modalProtein">0g</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3">
+                                <small class="text-muted d-block">คาร์โบไฮเดรต</small>
+                                <strong id="modalCarbs">0g</strong>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 border rounded-3">
+                                <small class="text-muted d-block">ไขมัน</small>
+                                <strong id="modalFat">0g</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Required Modal -->
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 shadow">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="loginRequiredModalLabel">🔒 กรุณาเข้าสู่ระบบก่อนเลือกอาหาร</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="fs-1 mb-2">🍽️</div>
+                    <p class="mb-1 fw-medium" id="loginRequiredMessage">คุณต้องเข้าสู่ระบบก่อนจึงจะสามารถเลือกอาหารลงตะกร้าได้</p>
+                    <p class="text-muted small mb-4">หากยังไม่มีบัญชี สามารถสมัครสมาชิกใหม่ได้ทันที</p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a href="/login" class="btn btn-order-thai px-4 py-2">เข้าสู่ระบบ</a>
+                        <a href="/login?mode=register" class="btn btn-auth-nav px-4 py-2">สมัครสมาชิกใหม่</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.__FOODHUB_USER__ = <%- JSON.stringify(currentUser || null).replace(/</g, '\\u003c') %>;
+        window.__FOODHUB_CART__ = <%- JSON.stringify(cart).replace(/</g, '\\u003c') %>;
+    </script>
+    <script src="/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+</html>
