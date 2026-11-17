@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: foodhub
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      # Note: Render Free tier has an ephemeral filesystem (SQLite resets on redeploy/spin-down).
+      # On a paid plan with a Persistent Disk mounted at /var/data, set:
+      # - key: DB_PATH
+      #   value: /var/data/foodhub.db

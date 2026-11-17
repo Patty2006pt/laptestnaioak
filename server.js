@@ -19,6 +19,7 @@ async function createApp(options = {}) {
     });
 
     const app = express();
+    app.set('trust proxy', 1);
     app.set('view engine', 'ejs');
     app.set('views', path.join(__dirname, 'views'));
 
@@ -41,6 +42,10 @@ async function createApp(options = {}) {
     );
 
     app.use(attachSessionLocals);
+
+    app.get('/health', (_req, res) => {
+        res.status(200).json({ status: 'ok' });
+    });
 
     app.use('/', createPagesRouter(db));
     app.use('/api/auth', createAuthRouter(db));
@@ -66,10 +71,21 @@ async function createApp(options = {}) {
 if (require.main === module) {
     const port = Number(process.env.PORT) || 3000;
     createApp()
-        .then(({ app }) => {
-            app.listen(port, () => {
+        .then(({ app, close }) => {
+            const server = app.listen(port, () => {
                 console.log(`Food Hub server running at http://localhost:${port}`);
             });
+
+            const shutdown = () => {
+                server.close(() => {
+                    close()
+                        .then(() => process.exit(0))
+                        .catch(() => process.exit(1));
+                });
+            };
+
+            process.on('SIGTERM', shutdown);
+            process.on('SIGINT', shutdown);
         })
         .catch((err) => {
             console.error('Failed to start server:', err);
