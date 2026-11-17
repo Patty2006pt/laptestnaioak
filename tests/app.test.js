@@ -242,4 +242,32 @@ test('Food Hub Express + EJS + SQLite integration flow', async (t) => {
         assert.equal(orderItems[0].product_name, 'ต้มยำกุ้ง');
         assert.equal(orderItems[0].quantity, 1);
     });
+
+    await t.test('tracks unique daily home visitors by IP address in Asia/Bangkok timezone', async () => {
+        const beforeStats = await client.request('/api/visitors');
+        assert.equal(beforeStats.status, 200);
+        const initialToday = beforeStats.body.todayCount;
+
+        const ip1First = await client.request('/', {
+            headers: { 'x-forwarded-for': '203.0.113.50' }
+        });
+        assert.equal(ip1First.status, 200);
+        assert.match(ip1First.body, new RegExp(`id="todayVisitorCount">${initialToday + 1}<`));
+
+        const ip1Second = await client.request('/', {
+            headers: { 'x-forwarded-for': '203.0.113.50' }
+        });
+        assert.equal(ip1Second.status, 200);
+        assert.match(ip1Second.body, new RegExp(`id="todayVisitorCount">${initialToday + 1}<`));
+
+        const ip2First = await client.request('/', {
+            headers: { 'x-forwarded-for': '203.0.113.51' }
+        });
+        assert.equal(ip2First.status, 200);
+        assert.match(ip2First.body, new RegExp(`id="todayVisitorCount">${initialToday + 2}<`));
+
+        const afterStats = await client.request('/api/visitors');
+        assert.equal(afterStats.status, 200);
+        assert.equal(afterStats.body.todayCount, initialToday + 2);
+    });
 });

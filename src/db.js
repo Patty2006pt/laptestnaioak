@@ -217,6 +217,17 @@ function createDatabase(dbPath = process.env.DB_PATH || DEFAULT_DB_PATH) {
                 FOREIGN KEY (product_id) REFERENCES products(id)
             )
         `);
+    
+
+        await run(`
+            CREATE TABLE IF NOT EXISTS home_visitors (
+                ip_address TEXT NOT NULL,
+                visit_date TEXT NOT NULL,
+                first_visited_at TEXT NOT NULL,
+                last_visited_at TEXT NOT NULL,
+                PRIMARY KEY (ip_address, visit_date)
+            )
+        `);
 
         const row = await get('SELECT COUNT(*) AS count FROM products');
         if (row.count === 0) {

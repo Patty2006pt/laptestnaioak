@@ -1,5 +1,6 @@
 const express = require('express');
 const { queryProducts } = require('./products');
+const { extractClientIp, getVisitorStats, recordHomeVisit } = require('../visitorCounter');
 
 function createPagesRouter(db) {
     const router = express.Router();
@@ -8,17 +9,30 @@ function createPagesRouter(db) {
         try {
             const selectedCategory = typeof req.query.category === 'string' ? req.query.category : 'all';
             const searchQuery = typeof req.query.q === 'string' ? req.query.q : '';
-            const products = await queryProducts(db, {
-                category: selectedCategory,
-                q: searchQuery
-            });
+            const [products, visitorStats] = await Promise.all([
+                queryProducts(db, {
+                    category: selectedCategory,
+                    q: searchQuery
+                }),
+                recordHomeVisit(db, extractClientIp(req))
+            ]);
 
             res.render('index', {
                 activePage: 'home',
                 products,
                 selectedCategory,
-                searchQuery
+                searchQuery,
+                visitorStats
             });
+        } catch (err) {
+            next(err);
+        }
+    });
+
+    router.get('/api/visitors', async (_req, res, next) => {
+        try {
+            const visitorStats = await getVisitorStats(db);
+            res.json(visitorStats);
         } catch (err) {
             next(err);
         }
